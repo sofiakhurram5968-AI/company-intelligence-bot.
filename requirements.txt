@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+requests
+beautifulsoup4
+lxml
+pydantic
+python-dotenv
+openai
+phonenumbers

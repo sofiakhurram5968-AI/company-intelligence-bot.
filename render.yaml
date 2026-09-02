@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: company-intelligence-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: http://localhost:3000
