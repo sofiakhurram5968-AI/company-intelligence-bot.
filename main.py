@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, HttpUrl
-from openai import OpenAI
+from google import genai
 
 load_dotenv()
 
@@ -38,10 +38,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY")
+client = genai.Client(
+    api_key=os.getenv("GEMINI_API_KEY")
 )
-
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -500,13 +499,11 @@ WEBSITE CONTENT:
 {context}
 """
 
-    response = client.responses.create(
-        model="gpt-5.6-luna",
-        input=prompt
-    )
-
-    output = response.output_text
-
+   response = client.models.generate_content(
+    model="gemini-2.5-flash",
+    contents=prompt
+)
+output = response.text
     try:
         return json.loads(output)
 
